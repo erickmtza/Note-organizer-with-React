@@ -13,11 +13,10 @@ import { Route, Link } from 'react-router-dom';
 
 class App extends React.Component {
 
-  getNotesForFolder = (notes = [], folderId) => (
-    (!folderId)
-      ? notes
-      : notes.filter(note => note.folderId === folderId)
-  )
+  state = {
+    folders: STORE.folders,
+    notes: STORE.notes
+  }
 
   render() {
 
@@ -31,7 +30,7 @@ class App extends React.Component {
         </header>
 
         <Sidebar
-          folders={STORE.folders}
+          folders={this.state.folders}
         />
 
         <main className='App'>
@@ -39,7 +38,7 @@ class App extends React.Component {
             exact path="/"
             render={() => (
               <NotesList
-                notes={STORE.notes}
+                notes={this.state.notes}
               />
             )}
           />
@@ -49,7 +48,7 @@ class App extends React.Component {
             render={({match}) => (
               console.log(match),
               <NotesList
-                notes={STORE.notes.filter(note => note.folderId === match.params.folderId )}
+                notes={this.state.notes.filter(note => note.folderId === match.params.folderId )}
               />
             )}
           />
@@ -59,7 +58,7 @@ class App extends React.Component {
             render={({match}) => (
               console.log(match),
               <Note
-                note={STORE.notes.find(note => note.name === match.params.noteId)}
+                note={this.state.notes.find(note => note.name === match.params.noteId)}
               />
             )}
           />
