@@ -3,11 +3,13 @@
     padding: 0;
 }
 
-main {
-    margin-left: 160px;
-}
-
 header {
     height: 60px;
     background: cadetblue;
+    width: 100%;
+    top: 0;
+}
+
+main {
+    margin-left: 160px;
 }
