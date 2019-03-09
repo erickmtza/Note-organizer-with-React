@@ -1,25 +1,84 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-class App extends Component {
+import STORE from './STORE';
+
+import Sidebar from './Sidebar/Sidebar';
+import NotesList from './NotesList/NotesList';
+import AddNote from './AddNote/AddNote';
+import AddFolder from './AddFolder/AddFolder'
+import Note from './Note/Note';
+
+import { Route, Link } from 'react-router-dom';
+
+class App extends React.Component {
+
+  getNotesForFolder = (notes = [], folderId) => (
+    (!folderId)
+      ? notes
+      : notes.filter(note => note.folderId === folderId)
+  )
+
   render() {
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+
+        <header>
+          <h1>
+            <Link to='/'>Noteful</Link>
+          </h1>
         </header>
+
+        <Sidebar
+          folders={STORE.folders}
+        />
+
+        <main className='App'>
+          <Route
+            exact path="/"
+            render={() => (
+              <NotesList
+                notes={STORE.notes}
+              />
+            )}
+          />
+
+          <Route
+            path="/folder/:folderId"
+            render={({match}) => (
+              console.log(match),
+              <NotesList
+                notes={STORE.notes.filter(note => note.folderId === match.params.folderId )}
+              />
+            )}
+          />
+
+          <Route
+            path="/note/:noteId"
+            render={({match}) => (
+              console.log(match),
+              <Note
+                note={STORE.notes.find(note => note.name === match.params.noteId)}
+              />
+            )}
+          />
+
+          <Route
+            path="/add-note"
+            component={AddNote}
+          />
+
+          <Route
+            path="/add-folder"
+            render={({history}) => {
+              return <AddFolder
+                onClickCancel={() => history.push('/')}
+              />
+            }}
+          />
+        </main>
+
       </div>
     );
   }
