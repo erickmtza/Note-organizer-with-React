@@ -21,6 +21,10 @@ function AddNote(props) {
                 <button type='submit'>
                     Add note
                 </button>
+                {' '}
+                <button type='submit' onClick={props.onClickCancel}>
+                    Cancel
+                </button>
             </fieldset>
         </form>
         
