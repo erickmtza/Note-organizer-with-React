@@ -21,11 +21,32 @@ class App extends React.Component {
     notes: STORE.notes
   }
 
+  addFolder = folder => {
+    this.setState({
+      folders: [...this.state.folders, folder]
+    })
+  }
+
+  addNote = note => {
+    this.setState({
+      notes: [...this.state.notes, note]
+    })
+  }
+
+  deleteNote = noteId => {
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== noteId)
+    })
+  }
+
   render() {
 
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
+      addFolder: this.addFolder,
+      addNote: this.addNote,
+      deleteNote: this.deleteNote,
     } 
 
     return (
@@ -113,11 +134,7 @@ class App extends React.Component {
 
             <Route
               path="/add-folder"
-              render={({history}) => {
-                return <AddFolder
-                  onClickCancel={() => history.push('/')}
-                />
-              }}
+              component={AddFolder}
             />
           </main>
 
