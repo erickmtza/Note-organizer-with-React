@@ -125,11 +125,7 @@ class App extends React.Component {
 
             <Route
               path="/add-note"
-              render={({history}) => {
-                return <AddNote
-                  onClickCancel={() => history.push('/')}
-                />
-              }}
+              component={AddNote}
             />
 
             <Route
