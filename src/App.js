@@ -8,6 +8,7 @@ import NotesList from './NotesList/NotesList';
 import AddNote from './AddNote/AddNote';
 import AddFolder from './AddFolder/AddFolder'
 import Note from './Note/Note';
+import SidebarNote from './SidebarNote/SidebarNote';
 
 import { Route, Link } from 'react-router-dom';
 
@@ -28,9 +29,37 @@ class App extends React.Component {
             <Link to='/'>Noteful</Link>
           </h1>
         </header>
+        
+        <Route
+          exact path='/'
+          render={() => (
+            <Sidebar
+              folders={this.state.folders}
+            />
+          )}
+        />
 
-        <Sidebar
-          folders={this.state.folders}
+        <Route
+          path='/folder'
+          render={() => (
+            <Sidebar
+              folders={this.state.folders}
+            />
+          )}
+        />
+
+        <Route
+          path='/note/:noteId'
+          render={(routeProps) => {
+            console.log(routeProps.match.params)
+            const folderName = this.state.notes.find(note => (note.name === routeProps.match.params.noteId))
+            console.log(folderName)
+            return <SidebarNote
+              onClickCancel={() => routeProps.history.push('/')}
+              folderName={this.state.folders.find(folder => folder.id === folderName.folderId) 
+              }
+            />
+          }}
         />
 
         <main className='App'>
