@@ -26,7 +26,7 @@ class NotesList extends React.Component {
                     key={note.id}
                 >
                     <Link to={`/note/${note.name}`}><h2>{note.name}</h2></Link>
-                    <button>Delete Note</button>
+                    <Link to={`/note/${note.name}`}><button>Delete?</button></Link>
                 </li>
             ))} else {
                 return this.filteredNotes()
