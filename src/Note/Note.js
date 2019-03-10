@@ -1,19 +1,26 @@
 import React from 'react';
 import './Note.css'
 
-export default function Note(props) {
+import NotefulContext from '../NotefulContext/NotefulContext';
 
-    const { note } = props
+export default class Note extends React.Component {
+
+    static contextType = NotefulContext;
+
+    render() {
+    const note = this.context.notes.find(note => note.name === this.props.match.params.noteId)    
 
     const modifiedDate = new Date(note.modified);
 
-    return (
-        <section className="note-content">
-            <h2>{note.name}</h2>
-            <p>{note.content}</p>
-            <p>{modifiedDate.toDateString()}</p>
-            <button>Delete Note</button>
-        </section>
-        
-    )
+    
+       return (
+            <section className="note-content">
+                <h2>{note.name}</h2>
+                <p>{note.content}</p>
+                <p>{modifiedDate.toDateString()}</p>
+                <button>Delete Note</button>
+            </section>
+        ) 
+    }
+    
 }

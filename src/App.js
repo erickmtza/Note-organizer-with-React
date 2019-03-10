@@ -17,8 +17,32 @@ import { Route, Link } from 'react-router-dom';
 class App extends React.Component {
 
   state = {
-    folders: STORE.folders,
-    notes: STORE.notes
+    folders: [],
+    notes: [],
+  }
+
+  componentDidMount() {
+    Promise.all([
+      fetch(`http://localhost:9090/notes`),
+      fetch(`http://localhost:9090/folders`)
+    ])
+      .then(([notesRes, foldersRes]) => {
+        if (!notesRes.ok)
+          return notesRes.json().then(e => Promise.reject(e))
+        if (!foldersRes.ok)
+          return foldersRes.json().then(e => Promise.reject(e))
+
+        return Promise.all([
+          notesRes.json(),
+          foldersRes.json(),
+        ])
+      })
+      .then(([notes, folders]) => {
+        this.setState({ notes, folders })
+      })
+      .catch(error => {
+        console.error({ error })
+      })
   }
 
   addFolder = folder => {
@@ -86,7 +110,7 @@ class App extends React.Component {
               const folderName = this.state.notes.find(note => (note.name === routeProps.match.params.noteId))
               console.log(folderName)
               return <SidebarNote
-                onClickCancel={() => routeProps.history.push('/')}
+                onClickCancel={() => routeProps.history.goBack()}
                 folderName={this.state.folders.find(folder => folder.id === folderName.folderId) 
                 }
               />
@@ -94,33 +118,20 @@ class App extends React.Component {
           />
 
           <main className='App'>
+          
             <Route
               exact path="/"
-              render={() => (
-                <NotesList
-                  notes={this.state.notes}
-                />
-              )}
+              component={NotesList}
             />
 
             <Route
               path="/folder/:folderId"
-              render={({match}) => (
-                console.log(match),
-                <NotesList
-                  notes={this.state.notes.filter(note => note.folderId === match.params.folderId )}
-                />
-              )}
+              component={NotesList}
             />
 
             <Route
               path="/note/:noteId"
-              render={({match}) => (
-                console.log(match),
-                <Note
-                  note={this.state.notes.find(note => note.name === match.params.noteId)}
-                />
-              )}
+              component={Note}
             />
 
             <Route
