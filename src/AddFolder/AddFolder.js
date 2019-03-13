@@ -55,7 +55,7 @@ class AddFolder extends React.Component {
                         Folder Name:
                     </label>
                     {' '}
-                    <input type='text' id='folder-name-input' name='folder' />
+                    <input type='text' id='folder-name-input' name='folder' required/>
                 </div>
                 <div className='buttons'>
                     <button type='submit'>
