@@ -11,6 +11,7 @@ import Note from './Note/Note';
 import SidebarNote from './SidebarNote/SidebarNote';
 
 import NotefulContext from './NotefulContext/NotefulContext';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 import { Route, Link } from 'react-router-dom';
 
