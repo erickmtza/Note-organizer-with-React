@@ -4,7 +4,7 @@ import './Note.css'
 import NotefulContext from '../NotefulContext/NotefulContext';
 
 function handleClickDelete(noteId, callback, goback) {
-
+  
     fetch(`http://localhost:9090/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
@@ -42,7 +42,7 @@ export default class Note extends React.Component {
                 <p>{modifiedDate.toDateString()}</p>
                 <button
                     type='button'
-                    onClick={() => handleClickDelete(note.id, this.context.deleteNote, () => this.props.history.push('/')) }
+                    onClick={() => handleClickDelete(note.id, this.context.deleteNote, this.props.history.push('/') )}
                 >Delete Note</button>
             </section>
         ) 
