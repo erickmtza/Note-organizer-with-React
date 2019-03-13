@@ -13,3 +13,7 @@ header {
 main {
     margin-left: 160px;
 }
+
+header {
+    position: fixed;
+}
