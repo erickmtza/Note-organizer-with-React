@@ -1,20 +1,61 @@
 import React from 'react';
 
+import NotefulContext from '../NotefulContext/NotefulContext';
+
 class AddFolder extends React.Component {
+
+    static contextType = NotefulContext;
+
     handleClickCancel = () => {
         this.props.history.push('/')
-      }
+    }
+
+    submitNewFolder = (e) => {
+        e.preventDefault();
+        
+        const folder = {
+            "id": `${e.target.folder.value}-${new Date()}`,
+            "name": e.target.folder.value,
+        }
+
+        console.log(folder)
+
+        fetch(`http://localhost:9090/folders`, {
+            method: 'POST',
+            body: JSON.stringify(folder),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+            if (!res.ok) {
+            // get the error message from the response,
+            return res.json().then(error => {
+                // then throw it
+                throw error
+            })
+            }
+            return res.json()
+        })
+        .then(folderDataRes => {
+          this.context.addFolder(folderDataRes)
+          this.props.history.push(`/folder/${folderDataRes.id}`)
+        })
+        .catch(error => {
+          console.error({ error })
+        })
+    }
       
     render() {
         return (
-            <form className='AddFolder'>
+            <form className='AddFolder' onSubmit={this.submitNewFolder}>
                 <h2>Create a folder</h2>
                 <div className='field'>
                     <label htmlFor='folder-name-input'>
                         Folder Name:
                     </label>
                     {' '}
-                    <input type='text' id='folder-name-input' />
+                    <input type='text' id='folder-name-input' name='folder' />
                 </div>
                 <div className='buttons'>
                     <button type='submit'>
