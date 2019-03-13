@@ -9,7 +9,7 @@ class AddNote extends React.Component {
 
     static contextType = NotefulContext;
 
-    submitNewFolder = (e) => {
+    submitNewNote = (e) => {
         e.preventDefault();
         
         const note = {
@@ -49,9 +49,11 @@ class AddNote extends React.Component {
     }
     
     render() {
+        
         const folders = this.context.folders.map(folder => <option key={folder.id} value={folder.id}>{folder.name}</option>)
+
         return (
-            <form className="add-note-form" onSubmit={this.submitNewFolder}>
+            <form className="add-note-form" onSubmit={this.submitNewNote}>
                 <fieldset>
                     <legend>Create a note</legend>
                     <div className='field'>
