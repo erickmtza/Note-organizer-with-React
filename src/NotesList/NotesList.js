@@ -3,13 +3,13 @@ import './NotesList.css'
 
 import { Link } from 'react-router-dom';
 
-import NotefulContext from '../NotefulContext/NotefulContext';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+
+import PropTypes from 'prop-types';
 
 class NotesList extends React.Component {
 
-    static contextType = NotefulContext;
-
-    filteredNotes = () => this.context.notes.filter(note => note.folderId === this.props.match.params.folderId ).map( note => (
+    notes = () => this.props.notes.map( note => (
         <li
             key={note.id}
         >
@@ -18,34 +18,33 @@ class NotesList extends React.Component {
             
         </li>
     ))
-
-    notes = () => {
-        if(this.props.match.params.folderId === undefined) {
-            return this.context.notes.map( note => (
-                <li
-                    key={note.id}
-                >
-                    <Link to={`/note/${note.name}`}><h2>{note.name}</h2></Link>
-                    <Link to={`/note/${note.name}`}><button>Delete?</button></Link>
-                </li>
-            ))} else {
-                return this.filteredNotes()
-            }
-    }
         
-    
     render() {
-        console.log(this.props.match.params.folderId)
         return (
             <section >
-                <ul className="list-container">
-                    {this.notes()}
-                </ul>
-                <Link to='/add-note'>Add Note</Link>
+                <ErrorBoundary>
+                    <ul className="list-container">
+                        {this.notes()}
+                    </ul>
+                    <Link to='/add-note'>Add Note</Link>
+                </ErrorBoundary> 
             </section>
         )
     }
-    
 }
+
+NotesList.propTypes = {
+    notes: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
+        modified: PropTypes.string.isRequired,
+        folderId: PropTypes.string.isRequired
+      })),
+}
+
+NotesList.defaultProps = {
+    notes: []
+};
 
 export default NotesList;

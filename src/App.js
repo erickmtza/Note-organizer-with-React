@@ -89,18 +89,23 @@ class App extends React.Component {
           <Route
             exact path='/'
             render={() => (
-              <Sidebar
-                folders={this.state.folders}
-              />
+              <ErrorBoundary>
+                <Sidebar
+                  folders={this.state.folders}
+                />
+              </ErrorBoundary>
+              
             )}
           />
 
           <Route
             path='/folder'
             render={() => (
-              <Sidebar
+              <ErrorBoundary>
+                <Sidebar
                 folders={this.state.folders}
               />
+              </ErrorBoundary>
             )}
           />
 
@@ -113,12 +118,22 @@ class App extends React.Component {
           
             <Route
               exact path="/"
-              component={NotesList}
+              render={() => (
+                <NotesList
+                  notes={this.state.notes}
+                />
+                )
+              }
             />
 
             <Route
               path="/folder/:folderId"
-              component={NotesList}
+              render={({match}) => (
+                <NotesList
+                  notes={this.state.notes.filter(note => note.folderId === match.params.folderId )}
+                />
+                )
+              }
             />
 
             <Route
@@ -128,7 +143,13 @@ class App extends React.Component {
 
             <Route
               path="/add-note"
-              component={AddNote}
+              render={(routeProps) => (
+                  <AddNote
+                    folders={this.state.folders}
+                    addNote={(data) => this.addNote(data)}
+                    {...routeProps}
+                  />
+              )}
             />
 
             <Route

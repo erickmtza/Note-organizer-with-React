@@ -1,13 +1,8 @@
 import React from 'react';
 
-import NotefulContext from '../NotefulContext/NotefulContext';
+import PropTypes from 'prop-types';
 
 class AddNote extends React.Component {
-    handleClickCancel = () => {
-        this.props.history.push('/')
-    }
-
-    static contextType = NotefulContext;
 
     submitNewNote = (e) => {
         e.preventDefault();
@@ -40,7 +35,7 @@ class AddNote extends React.Component {
             return res.json()
         })
         .then(data => {
-          this.context.addNote(data)
+          this.props.addNote(data)
           this.props.history.push(`/folder/${data.folderId}`)
         })
         .catch(error => {
@@ -49,9 +44,8 @@ class AddNote extends React.Component {
     }
     
     render() {
-        
-        const folders = this.context.folders.map(folder => <option key={folder.id} value={folder.id}>{folder.name}</option>)
-
+        const folders = this.props.folders.map(folder => <option key={folder.id} value={folder.id}>{folder.name}</option>)
+        console.log(this.props)
         return (
             <form className="add-note-form" onSubmit={this.submitNewNote}>
                 <fieldset>
@@ -77,14 +71,28 @@ class AddNote extends React.Component {
                         Add note
                     </button>
                     {' '}
-                    <button type='submit' onClick={this.handleClickCancel}>
+                    <button type='submit' onClick={() => this.props.history.push('/')}>
                         Cancel
                     </button>
                 </fieldset>
             </form>
-        
         )
     }
 }
+
+AddNote.propTypes = {
+    folders: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      })),
+    addNote: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object,
+    match: PropTypes.object
+}
+
+AddNote.defaultProps = {
+    folders: []
+};
 
 export default AddNote;

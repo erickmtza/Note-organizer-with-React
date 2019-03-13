@@ -3,8 +3,9 @@ import './Sidebar.css';
 
 import { NavLink, Link } from 'react-router-dom';
 
-function Sidebar(props) {
+import PropTypes from 'prop-types';
 
+function Sidebar(props) {
     const folders = props.folders.map(file => (
         <NavLink to={`/folder/${file.id}`} key={file.id}>
             <li
@@ -26,5 +27,16 @@ function Sidebar(props) {
         
     )
 }
+
+Sidebar.propTypes = {
+    folders: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      })),
+}
+
+Sidebar.defaultProps = {
+    folders: []
+};
 
 export default Sidebar;
