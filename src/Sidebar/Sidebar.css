@@ -18,6 +18,7 @@ li {
     color: black;
 }
 
-.active {
-    color: blue;
+.active > li {
+    color: whitesmoke;
+    background: black;
 }
