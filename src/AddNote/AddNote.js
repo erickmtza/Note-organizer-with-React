@@ -3,7 +3,7 @@ import React from 'react';
 class AddNote extends React.Component {
     handleClickCancel = () => {
         this.props.history.push('/')
-      }
+    }
     
     render() {
         return (
