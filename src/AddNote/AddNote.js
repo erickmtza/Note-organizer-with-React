@@ -1,4 +1,5 @@
 import React from 'react';
+import './AddNote.css'
 
 import NotefulContext from '../NotefulContext/NotefulContext';
 
