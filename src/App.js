@@ -154,7 +154,12 @@ class App extends React.Component {
 
             <Route
               path="/add-folder"
-              component={AddFolder}
+              render={({history}) => (
+                <AddFolder
+                  history={history}
+                  addFolder={(folder) => this.addFolder(folder)}
+                />
+              )}
             />
           </main>
 

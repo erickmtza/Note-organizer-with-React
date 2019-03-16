@@ -1,12 +1,9 @@
 import React from 'react';
-
 import './AddFolder.css'
 
-import NotefulContext from '../NotefulContext/NotefulContext';
+import PropTypes from 'prop-types';
 
 class AddFolder extends React.Component {
-
-    static contextType = NotefulContext;
 
     handleClickCancel = () => {
         this.props.history.push('/')
@@ -19,8 +16,6 @@ class AddFolder extends React.Component {
             "id": `${e.target.folder.value}-${new Date()}`,
             "name": e.target.folder.value,
         }
-
-        console.log(folder)
 
         fetch(`http://localhost:9090/folders`, {
             method: 'POST',
@@ -40,7 +35,7 @@ class AddFolder extends React.Component {
             return res.json()
         })
         .then(folderDataRes => {
-          this.context.addFolder(folderDataRes)
+          this.props.addFolder(folderDataRes)
           this.props.history.push(`/folder/${folderDataRes.id}`)
         })
         .catch(error => {
@@ -49,6 +44,7 @@ class AddFolder extends React.Component {
     }
       
     render() {
+        console.log(this.props)
         return (
             <form className='AddFolder' onSubmit={this.submitNewFolder}>
                 <h2>Create a folder</h2>
@@ -72,6 +68,11 @@ class AddFolder extends React.Component {
         ) 
     }
     
+}
+
+AddFolder.propTypes = {
+    addFolder: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
 }
 
 export default AddFolder;
