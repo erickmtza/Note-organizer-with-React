@@ -47,7 +47,7 @@ export default class Note extends React.Component {
 }
 
 Note.propTypes = {
-  note: PropTypes.objectOf(PropTypes.PropTypes.string.isRequired).isRequired,
+  note: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
   deleteNote: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object,
