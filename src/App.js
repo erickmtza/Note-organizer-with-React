@@ -111,7 +111,13 @@ class App extends React.Component {
 
           <Route
             path='/note/:noteId'
-            component={SidebarNote}
+            render={(routeProps) => {
+              const findFolderName = this.state.notes.find(note => (note.name === routeProps.match.params.noteId))
+              return <SidebarNote
+                folderName={this.state.folders.find(folder => folder.id === findFolderName.folderId)}
+                onClickCancel={() => routeProps.history.push('/')}
+              />
+            }}
           />
 
           <main className='App'>
