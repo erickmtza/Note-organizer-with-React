@@ -1,4 +1,5 @@
 import React from 'react';
+import './AddNote.css'
 
 import PropTypes from 'prop-types';
 
