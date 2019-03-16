@@ -138,17 +138,23 @@ class App extends React.Component {
 
             <Route
               path="/note/:noteId"
-              component={Note}
+              render={(routeProps) => (
+                <Note
+                  note={this.state.notes.find(note => note.name === routeProps.match.params.noteId)}
+                  deleteNote={(note) => this.deleteNote(note)}
+                  {...routeProps}
+                />
+              )}
             />
 
             <Route
               path="/add-note"
               render={(routeProps) => (
-                  <AddNote
-                    folders={this.state.folders}
-                    addNote={(data) => this.addNote(data)}
-                    {...routeProps}
-                  />
+                <AddNote
+                  folders={this.state.folders}
+                  addNote={(data) => this.addNote(data)}
+                  {...routeProps}
+                />
               )}
             />
 

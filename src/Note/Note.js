@@ -1,7 +1,7 @@
 import React from 'react';
 import './Note.css'
 
-import NotefulContext from '../NotefulContext/NotefulContext';
+import PropTypes from 'prop-types';
 
 function handleClickDelete(noteId, callback, goback) {
   
@@ -27,25 +27,33 @@ function handleClickDelete(noteId, callback, goback) {
 
 export default class Note extends React.Component {
 
-    static contextType = NotefulContext;
-
     render() {
-    const note = this.context.notes.find(note => note.name === this.props.match.params.noteId)    
+      const { note } = this.props
 
-    const modifiedDate = new Date(note.modified);
+      const modifiedDate = new Date(note.modified);
 
-    
-       return (
-            <section className="note-content">
-                <h2>{note.name}</h2>
-                <p>{note.content}</p>
-                <p>{modifiedDate.toDateString()}</p>
-                <button
-                    type='button'
-                    onClick={() => handleClickDelete(note.id, this.context.deleteNote, this.props.history.push('/') )}
-                >Delete Note</button>
-            </section>
+      return (
+        <section className="note-content">
+            <h2>{note.name}</h2>
+            <p>{note.content}</p>
+            <p>{modifiedDate.toDateString()}</p>
+            <button
+                type='button'
+                onClick={() => handleClickDelete(note.id, this.props.deleteNote, this.props.history.push('/') )}
+            >Delete Note</button>
+        </section>
         ) 
     }
-    
 }
+
+Note.propTypes = {
+  note: PropTypes.objectOf(PropTypes.PropTypes.string.isRequired).isRequired,
+  deleteNote: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object,
+  match: PropTypes.object
+}
+
+Note.defaultProps = {
+  note: {}
+};
