@@ -1,4 +1,5 @@
 import React from 'react';
+import './SidebarNote.css'
 
 import NotefulContext from '../NotefulContext/NotefulContext';
 
@@ -17,7 +18,7 @@ export default class SidebarNote extends React.Component {
         console.log(this.findFolderName)
         console.log(this.folderName)
         return (
-            <div>
+            <div className="sidebar-note">
                 <button onClick={this.handleBackCancel} >Go back</button>
                 <p>{this.folderName.name}</p>
             </div>
