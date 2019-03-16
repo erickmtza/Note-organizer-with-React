@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './AddFolder.css'
+
 import NotefulContext from '../NotefulContext/NotefulContext';
 
 class AddFolder extends React.Component {
