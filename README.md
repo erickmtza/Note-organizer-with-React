@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Important
 ## Noteful JSON server
+Run the server alongside the app.
+
 git clone https://github.com/tomatau/noteful-json-server
 
 Once cloned, go into the directory and:
