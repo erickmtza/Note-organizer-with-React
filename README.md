@@ -1,5 +1,13 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Important
+## Noteful JSON server
+git clone https://github.com/tomatau/noteful-json-server
+
+Once cloned, go into the directory and:
+npm install
+npm start
+
 ## Available Scripts
 
 In the project directory, you can run:
