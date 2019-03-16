@@ -10,7 +10,6 @@ import AddFolder from './AddFolder/AddFolder'
 import Note from './Note/Note';
 import SidebarNote from './SidebarNote/SidebarNote';
 
-import NotefulContext from './NotefulContext/NotefulContext';
 import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 import { Route, Link } from 'react-router-dom';
@@ -65,19 +64,7 @@ class App extends React.Component {
   }
 
   render() {
-
-    const contextValue = {
-      folders: this.state.folders,
-      notes: this.state.notes,
-      addFolder: this.addFolder,
-      addNote: this.addNote,
-      deleteNote: this.deleteNote,
-    } 
-
     return (
-      <NotefulContext.Provider
-        value={contextValue}  
-      >
         <div className="App">
 
           <header>
@@ -176,7 +163,6 @@ class App extends React.Component {
           </main>
 
         </div>
-      </NotefulContext.Provider>
     );
   }
 }
