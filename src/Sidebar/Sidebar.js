@@ -11,7 +11,7 @@ function Sidebar(props) {
                 key={file.id}
                 className="Folders"
             >
-                {file.name}
+                {file.folder_name}
             </li>
         </NavLink>
     ))

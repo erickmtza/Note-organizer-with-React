@@ -15,13 +15,12 @@ class AddFolder extends React.Component {
         e.preventDefault();
         
         const folder = {
-            "id": `${e.target.folder.value}-${new Date()}`,
-            "name": e.target.folder.value,
+            "folder_name": e.target.folder.value,
         }
 
         console.log(folder)
 
-        fetch(`http://localhost:9090/folders`, {
+        fetch(`http://localhost:8000/api/folders`, {
             method: 'POST',
             body: JSON.stringify(folder),
             headers: {

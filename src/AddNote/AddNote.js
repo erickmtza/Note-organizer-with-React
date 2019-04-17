@@ -14,16 +14,14 @@ class AddNote extends React.Component {
         e.preventDefault();
         
         const note = {
-            "id": `${e.target.name.value}-${new Date()}`,
-            "name": e.target.name.value,
-            "modified": new Date(),
-            "folderId": e.target.folder.value,
+            "note_name": e.target.name.value,
+            "folder_id": e.target.folder.value,
             "content": e.target.description.value
         }
 
         console.log(note)
 
-        fetch(`http://localhost:9090/notes`, {
+        fetch(`http://localhost:8000/api/notes`, {
             method: 'POST',
             body: JSON.stringify(note),
             headers: {
@@ -42,7 +40,7 @@ class AddNote extends React.Component {
         })
         .then(data => {
           this.context.addNote(data)
-          this.props.history.push(`/folder/${data.folderId}`)
+          this.props.history.push(`/folder/${data.folder_id}`)
         })
         .catch(error => {
           console.error({ error })
@@ -51,7 +49,7 @@ class AddNote extends React.Component {
     
     render() {
         
-        const folders = this.context.folders.map(folder => <option key={folder.id} value={folder.id}>{folder.name}</option>)
+        const folders = this.context.folders.map(folder => <option key={folder.id} value={folder.id}>{folder.folder_name}</option>)
 
         return (
             <form className="add-note-form" onSubmit={this.submitNewNote}>

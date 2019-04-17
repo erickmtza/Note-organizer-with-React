@@ -9,12 +9,12 @@ class NotesList extends React.Component {
 
     static contextType = NotefulContext;
 
-    filteredNotes = () => this.context.notes.filter(note => note.folderId === this.props.match.params.folderId ).map( note => (
+    filteredNotes = () => this.context.notes.filter(note => note.folder_id === Number(this.props.match.params.folderId) ).map( note => (
         <li
             key={note.id}
         >
-            <Link to={`/note/${note.name}`}><h2>{note.name}</h2></Link>
-            <Link to={`/note/${note.name}`}><button>Delete?</button></Link>
+            <Link to={`/note/${note.id}`}><h2>{note.note_name}</h2></Link>
+            <Link to={`/note/${note.id}`}><button>Delete?</button></Link>
             
         </li>
     ))
@@ -25,8 +25,8 @@ class NotesList extends React.Component {
                 <li
                     key={note.id}
                 >
-                    <Link to={`/note/${note.name}`}><h2>{note.name}</h2></Link>
-                    <Link to={`/note/${note.name}`}><button>Delete?</button></Link>
+                    <Link to={`/note/${note.id}`}><h2>{note.note_name}</h2></Link>
+                    <Link to={`/note/${note.id}`}><button>Delete?</button></Link>
                 </li>
             ))} else {
                 return this.filteredNotes()
@@ -35,7 +35,9 @@ class NotesList extends React.Component {
         
     
     render() {
-        console.log(this.props.match.params.folderId)
+        console.log(typeof this.props.match.params.folderId)
+        console.log(this.context.notes.map(note => typeof note.folder_id))
+        
         return (
             <section >
                 <ul className="list-container">
