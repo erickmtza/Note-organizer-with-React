@@ -24,8 +24,8 @@ class App extends React.Component {
 
   componentDidMount() {
     Promise.all([
-      fetch(`http://localhost:8000/api/notes`),
-      fetch(`http://localhost:8000/api/folders`)
+      fetch(`https://sleepy-meadow-67516.herokuapp.com/api/notes`),
+      fetch(`https://sleepy-meadow-67516.herokuapp.com/api/folders`)
     ])
       .then(([notesRes, foldersRes]) => {
         if (!notesRes.ok)

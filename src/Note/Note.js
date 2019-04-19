@@ -5,7 +5,7 @@ import NotefulContext from '../NotefulContext/NotefulContext';
 
 function handleClickDelete(noteId, callback, goback) {
   
-    fetch(`http://localhost:8000/api/notes/${noteId}`, {
+    fetch(`https://sleepy-meadow-67516.herokuapp.com/api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'

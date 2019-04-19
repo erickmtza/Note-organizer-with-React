@@ -20,7 +20,7 @@ class AddFolder extends React.Component {
 
         console.log(folder)
 
-        fetch(`http://localhost:8000/api/folders`, {
+        fetch(`https://sleepy-meadow-67516.herokuapp.com/api/folders`, {
             method: 'POST',
             body: JSON.stringify(folder),
             headers: {
